@@ -37,7 +37,9 @@ When the quries are generated it then reads the list from a file. The file conta
     ENV PROM_SERVER='https://prom-1.dj-test.dev.gds-reliability.engineering/'
     ```
 
-    b. build the initial containers with the following commands:
+    c. ### IF YOU NEED AUTH EDIT THE LOCUST FILE USING [THESE INSTRUCTIONS](http://docs.python-requests.org/en/master/user/authentication/#basic-authentication)
+
+    d. build the initial containers with the following commands:
         
 
         docker build -t local/locustserver .
@@ -45,15 +47,15 @@ When the quries are generated it then reads the list from a file. The file conta
         docker build -t local/locustexporter .
 
 
-    c. Please also make sure that you configure prometheus to scrape the prometheus that is the system under test. This can be done by adding the target prometheus server to the scrape config defined here: 
+    e. Please also make sure that you configure prometheus to scrape the prometheus that is the system under test. This can be done by adding the target prometheus server to the scrape config defined here: 
     
         {project_root}/config/prometheus-config.yaml
 
-    d. If all is well you can configure the enviroment. In order to do that we run a docker compose command that should bring everything up as expected. Run this command as root since we have seen some issues with it.
+    f. If all is well you can configure the enviroment. In order to do that we run a docker compose command that should bring everything up as expected. Run this command as root since we have seen some issues with it.
 
         sudo docker-compose -f compose-env.yaml
 
-    e. All should of gone well. You can verify this by running the following command and receiving similar output.
+    g. All should of gone well. You can verify this by running the following command and receiving similar output.
 
         docker ps 
         root@ip-10-0-101-220:/home/ubuntu# docker ps
@@ -65,7 +67,7 @@ When the quries are generated it then reads the list from a file. The file conta
 
 ## Operating the load test
 
-## AWS
+### AWS
 
 1. You have to either open the firewall to allow all traffic from your IP or configrue access to the required ports
 
