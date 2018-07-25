@@ -1,0 +1,46 @@
+groups:
+- name: "alert_builder_generated_rules"
+  rules:
+  - alert: "AlertLowLatency"
+    expr: "api_http_request_latencies_second{quantile='0.5'} > 1"
+    for: 5m
+    labels:
+      serverity: "minor"
+    annotations:
+      summary: "Instance {{ $labels.instance }} low latency warning"
+      dashboard_url: "http://grafanaboard.example.net"
+      impact: "12"
+      runbook: ""
+
+  - alert: "AlertWhenMore"
+    expr: "up == 0"
+    for: 2h
+    labels:
+      serverity: "critical"
+    annotations:
+      summary: "Instance {{ $labels.instance }} is down"
+      dashboard_url: "http://grafanaboardTwo.example.net"
+      impact: "83"
+      runbook: ""
+
+  - alert: "AlertWhenMore"
+    expr: "up != 1"
+    for: 30m
+    labels:
+      priority: "high"
+    annotations:
+      summary: "another summary"
+      dashboard_url: "http://dashb.example.com"
+      impact: "383"
+      runbook: ""
+
+  - alert: "ReqyestsBelowExpected"
+    expr: "http_request_total{job='somejob'} <= 30"
+    for: 13h
+    labels:
+      team: "Test Team"
+    annotations:
+      summary: "Well summary"
+      dashboard_url: "http://dashboard.example.org"
+      impact: "83"
+      runbook: ""

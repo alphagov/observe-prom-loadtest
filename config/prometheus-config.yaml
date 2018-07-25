@@ -1,0 +1,31 @@
+global:
+  scrape_interval:     1s # By default, scrape targets every 15 seconds.
+  external_labels:
+    monitor: prometheus
+    replica: A
+
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  - job_name: 'prometheus-local'
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['localhost:9090', 'grafana:3000', 'node-exporter:9100']
+
+
+  - job_name: prometheus
+    scheme: https
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['prom-1.dj-test.dev.gds-reliability.engineering']
+
+  - job_name: dj-locust-test
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['locustexporter:4455']
+
+ # - job_name: 'Elixir App Platform'
+#    scrape_interval: 1s
+ #   static_configs:
+ #     - targets: ["192.168.0.9:4000"]

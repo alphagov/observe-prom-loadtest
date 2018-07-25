@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+
+  ### Prometheus  Server
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ${PWD}/config:/etc/prometheus
+      - ${PWD}/config/alerts:/etc/prometheus/alerts
+    command:
+      - '--config.file=/etc/prometheus/prometheus-config.yaml'
+      - '--web.enable-lifecycle'
+
+  locustserver:
+    image: local/locustserver
+    ports: 
+      - "8089:8089"
+    expose:
+      - "8089"
+
+  locustexporter:
+    image: local/locustexporter
+    depends_on:
+      - "locustserver"
+    links:
+      - locustserver
+    ports: 
+      - "4455:4455"
+    expose:
+      - "4455"
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    volumes:
+      - ${PWD}/config/grafana/provisioning:/etc/grafana/provisioning
+      - ${PWD}/config/grafana/dashboards:/var/lib/grafana/dashboards
