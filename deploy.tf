@@ -84,11 +84,9 @@ resource "aws_instance" "loadtest_system" {
   ami           = "ami-2a7d75c0"
   instance_type = "t2.small"
   availability_zone = "eu-west-1a"
-
   user_data = "${data.template_file.user_data_script.rendered}"
 
   security_groups = ["${aws_security_group.loadtest_group.name}"]
   key_name = "dj-test-jumpbox-key"
-
 }
 
