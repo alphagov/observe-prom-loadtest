@@ -12,6 +12,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus-config.yaml'
       - '--web.enable-lifecycle'
+      - '--storage.tsdb.path="/promdata"'
     user: 65535:65535
 
   locustserver:
