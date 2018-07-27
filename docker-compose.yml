@@ -13,7 +13,7 @@ services:
       - '--config.file=/etc/prometheus/prometheus-config.yaml'
       - '--web.enable-lifecycle'
       - '--storage.tsdb.path="/promdata"'
-    user: 65535:65535
+    user: nobody
 
   locustserver:
     image: local/locustserver
@@ -21,7 +21,7 @@ services:
       - "8089:8089"
     expose:
       - "8089"
-    user: 65535:65535
+    user: nobody
 
   locustexporter:
     image: local/locustexporter
@@ -34,7 +34,7 @@ services:
     expose:
       - "4455"
     restart: always
-    user: 65535:65535
+    user: nobody
 
   grafana:
     image: grafana/grafana:latest
@@ -46,4 +46,4 @@ services:
     volumes:
       - ${PWD}/config/grafana/provisioning:/etc/grafana/provisioning
       - ${PWD}/config/grafana/dashboards:/var/lib/grafana/dashboards
-    user: 65535:65535
+    user: nobody
