@@ -1,8 +1,6 @@
 version: "3"
 
 services:
-
-  ### Prometheus  Server
   prometheus:
     container_name: prometheus
     image: prom/prometheus
@@ -10,6 +8,7 @@ services:
       - 9090:9090
     volumes:
       - ${PWD}/config:/etc/prometheus
+      - /promdata:/data
     command:
       - '--config.file=/etc/prometheus/prometheus-config.yaml'
       - '--web.enable-lifecycle'
@@ -21,6 +20,7 @@ services:
       - "8089:8089"
     expose:
       - "8089"
+    user: 65535:65535
 
   locustexporter:
     image: local/locustexporter
@@ -33,6 +33,7 @@ services:
     expose:
       - "4455"
     restart: always
+    user: 65535:65535
 
   grafana:
     image: grafana/grafana:latest
@@ -44,3 +45,4 @@ services:
     volumes:
       - ${PWD}/config/grafana/provisioning:/etc/grafana/provisioning
       - ${PWD}/config/grafana/dashboards:/var/lib/grafana/dashboards
+    user: 65535:65535
