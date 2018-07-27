@@ -10,10 +10,10 @@ services:
       - 9090:9090
     volumes:
       - ${PWD}/config:/etc/prometheus
-      - ${PWD}/config/alerts:/etc/prometheus/alerts
     command:
       - '--config.file=/etc/prometheus/prometheus-config.yaml'
       - '--web.enable-lifecycle'
+    user: 65535:65535
 
   locustserver:
     image: local/locustserver
