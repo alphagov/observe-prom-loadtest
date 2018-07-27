@@ -58,6 +58,16 @@ security_group_id = "${aws_security_group.loadtest_group.id}"
 cidr_blocks       = ["${var.cidr_admin_whitelist}"]
 }
 
+
+resource "aws_security_group_rule" "egress_allow_all" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.loadtest_group.id}"
+}
+
 resource "aws_ebs_volume" "loadtest_disk" {
   availability_zone = "eu-west-1a"
   size = 10

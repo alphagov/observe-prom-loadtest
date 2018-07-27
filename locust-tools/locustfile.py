@@ -7,7 +7,7 @@ def find_metrics(host, app_name):
     r = requests.get('{}/api/v1/series?match[]={{job="{}"}}'.format(host, app_name)).json()
     return r['data']
 
-metrics = find_metrics(<<prometheus url>>,<<prometheus job>>)
+metrics = find_metrics('https://prom-1.dj-test.dev.gds-reliability.engineering/','prometheus')
 
 def group_metrics_by_dimension(metrics):
     bucketed_metrics = {}
