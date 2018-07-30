@@ -8,7 +8,7 @@ def find_metrics(host, app_name):
     r = requests.get('{}/api/v1/series?match[]={{job="{}"}}'.format(host, app_name)).json()
     return r['data']
 
-metrics = find_metrics(<<prometheus url>>,<<prometheus job>>)
+metrics = find_metrics('https://prom-1.dj-test.dev.gds-reliability.engineering/', 'prometheus')
 
 def group_metrics_by_dimension(metrics):
     bucketed_metrics = {}
@@ -80,7 +80,7 @@ def generate_tasks():
     with open("/tmp/outfile") as f:
         content = f.readlines()
     for q in content:
-        tasks.append(create_task("/api/v1/query_range?query={}&&start=2018-07-22T00:00:00.00Z&end="+datetime.datetime.utcnow().strftime("%Y-%m-%d")+"T23:59:00.0Z&step=15m".format(q)))
+        tasks.append(create_task("api/v1/query_range?query={}&&start=2018-07-22T00:00:00.00Z&end=".format(q)+datetime.datetime.utcnow().strftime("%Y-%m-%d")+"T23:59:00.0Z&step=15m"))
     return tasks
 
 class UserBehavior(TaskSet):
